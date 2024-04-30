@@ -29,4 +29,4 @@ environment = SubResource("Environment_p37cq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31343, 2)
 
 [node name="Level" parent="." instance=ExtResource("1_siw3e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0316374, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
