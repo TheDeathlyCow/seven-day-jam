@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://cbp28d5bhggei"]
+[gd_scene load_steps=3 format=3 uid="uid://cbp28d5bhggei"]
+
+[ext_resource type="Script" path="res://scripts/hello_world.gd" id="1_1bp05"]
+
+[sub_resource type="TextMesh" id="TextMesh_rr1d1"]
 
 [node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TextMesh_rr1d1")
+script = ExtResource("1_1bp05")
+text = "Hello World"
+meshLabel = SubResource("TextMesh_rr1d1")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.00012)
