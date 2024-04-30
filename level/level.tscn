@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg52uh2jvemlm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_eufp6"]
+
+[node name="Level" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00915, 0)
+mesh = SubResource("BoxMesh_eufp6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 0.308, 0, 0, 0, 40, 0, 0, 0)
+size = Vector3(1, 0.001, 1)
