@@ -30,5 +30,5 @@ shadow_enabled = true
 environment = SubResource("Environment_p37cq")
 
 [node name="RefBall" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.00542, 0, 0, 0, 1.00542, 0, 0, 0, 1.00542, 0, 0, 61.6709)
+transform = Transform3D(9.45491, 0, 0, 0, 9.45491, 0, 0, 0, 9.45491, -0.14975, 1.64074, 61.8751)
 mesh = SubResource("SphereMesh_ree3j")

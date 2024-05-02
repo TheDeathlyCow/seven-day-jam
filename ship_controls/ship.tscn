@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://c34kxvuj4tqf4"]
+[gd_scene load_steps=6 format=3 uid="uid://c34kxvuj4tqf4"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_6v0eb"]
 [ext_resource type="Script" path="res://ship_controls/ship_control.gd" id="1_lbqn1"]
 [ext_resource type="PackedScene" uid="uid://dg52uh2jvemlm" path="res://ship_level/level.tscn" id="2_vfkjq"]
 [ext_resource type="PackedScene" uid="uid://bwq280xjn67uj" path="res://ocean/water_plane.tscn" id="4_x37wq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dwuxd"]
+size = Vector3(12, 48.2802, 1.25635)
 
 [node name="Ship" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
@@ -18,4 +21,8 @@ ship = NodePath("..")
 [node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
 
 [node name="WaterPlane" parent="ShipController" instance=ExtResource("4_x37wq")]
-transform = Transform3D(125.159, 0, 0, 0, 18.9106, 0, 0, 0, 192.33, 0.0697269, -5.3254, 91.7608)
+transform = Transform3D(125.159, 0, 0, 0, 18.9106, 0, 0, 0, 192.33, 0.0294247, -5.32541, 91.663)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5.13931, 26.7014)
+shape = SubResource("BoxShape3D_dwuxd")
