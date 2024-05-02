@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var sensitivity: float = 0.005
 
-@export var ship: Transform3D
+@export var ship: Node3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -17,6 +17,8 @@ var is_piloting = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if ship == null:
+		push_error("Player root ship node cannot be null!")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
