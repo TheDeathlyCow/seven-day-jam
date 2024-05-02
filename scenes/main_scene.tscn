@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbp28d5bhggei"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_h16pw"]
-[ext_resource type="PackedScene" uid="uid://dg52uh2jvemlm" path="res://level/level.tscn" id="1_siw3e"]
+[ext_resource type="PackedScene" uid="uid://dg52uh2jvemlm" path="res://ship_level/level.tscn" id="1_siw3e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62wkf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,15 +18,17 @@ glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
+[node name="Ship" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
+
+[node name="Player" parent="Ship" instance=ExtResource("1_h16pw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4161, 2)
+
+[node name="ShipLevel" parent="Ship" instance=ExtResource("1_siw3e")]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p37cq")
-
-[node name="Player" parent="." instance=ExtResource("1_h16pw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31343, 2)
-
-[node name="Level" parent="." instance=ExtResource("1_siw3e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
