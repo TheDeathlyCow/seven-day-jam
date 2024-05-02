@@ -6,6 +6,7 @@ extends CharacterBody3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
+const MAX_VERTICAL_LOOK = PI / 2
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -61,6 +62,7 @@ func _input(event):
 func rotate_camera(relative: Vector2):
 	accumulated_rotation.x += -relative.x * sensitivity
 	accumulated_rotation.y += -relative.y * sensitivity
+	accumulated_rotation.y = clamp(accumulated_rotation.y, -MAX_VERTICAL_LOOK, MAX_VERTICAL_LOOK)
 	transform.basis = Basis()
 	rotate_object_local(Vector3.UP, accumulated_rotation.x)
 	rotate_object_local(Vector3.RIGHT, accumulated_rotation.y)

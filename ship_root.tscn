@@ -8,8 +8,10 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 script = ExtResource("1_lbqn1")
 
-[node name="Player" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("1_6v0eb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4161, 2)
-ship = NodePath("..")
+[node name="ShipController" type="CharacterBody3D" parent="."]
 
-[node name="ShipLevel" parent="." instance=ExtResource("2_vfkjq")]
+[node name="Player" parent="ShipController" node_paths=PackedStringArray("ship") instance=ExtResource("1_6v0eb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4161, 2)
+ship = NodePath("../..")
+
+[node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
