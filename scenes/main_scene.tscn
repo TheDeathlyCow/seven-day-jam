@@ -14,6 +14,7 @@ background_mode = 2
 sky = SubResource("Sky_dgcjg")
 tonemap_mode = 2
 glow_enabled = true
+fog_enabled = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_ree3j"]
 
