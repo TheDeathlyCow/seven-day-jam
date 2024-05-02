@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var sensitivity: float = 0.005
 
-@onready var camera = $"."
+@export var ship: Transform3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -11,6 +11,8 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var accumulated_rotation: Vector2 = Vector2(0, 0)
+
+var isPiloting = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,7 +29,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -46,11 +48,13 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative)
+	if event.is_action_released('toggle_pilot_ship'):
+		isPiloting = !isPiloting
 
 
 func rotate_camera(relative: Vector2):
 	accumulated_rotation.x += -relative.x * sensitivity
 	accumulated_rotation.y += -relative.y * sensitivity
-	camera.transform.basis = Basis()
-	camera.rotate_object_local(Vector3.UP, accumulated_rotation.x)
-	camera.rotate_object_local(Vector3.RIGHT, accumulated_rotation.y)
+	transform.basis = Basis()
+	rotate_object_local(Vector3.UP, accumulated_rotation.x)
+	rotate_object_local(Vector3.RIGHT, accumulated_rotation.y)
