@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg52uh2jvemlm"]
+[gd_scene load_steps=4 format=3 uid="uid://dg52uh2jvemlm"]
+
+[ext_resource type="PackedScene" uid="uid://h3cpafylh5or" path="res://ship_level/wall/wall.tscn" id="1_8oopf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_uw2m3"]
 
@@ -7,21 +9,24 @@
 [node name="Level" type="Node3D"]
 
 [node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 0.04, 0, 0, 0, 5, 0, -1.69388, 0)
+transform = Transform3D(5, 0, 0, 0, 0.04, 0, 0, 0, 5, -0.00478649, -1.97373, -0.00528836)
 mesh = SubResource("BoxMesh_uw2m3")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
 transform = Transform3D(0.998947, 0, 0, 0, 0.998947, 0, 0, 0, 0.998947, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_udi4c")
 
-[node name="Wall" type="MeshInstance3D" parent="."]
+[node name="Wall" parent="." instance=ExtResource("1_8oopf")]
 transform = Transform3D(5, 0, 0, 0, 4, 0, 0, 0, 0.1, 0, 0, -2.5)
-mesh = SubResource("BoxMesh_uw2m3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall"]
-transform = Transform3D(0.998947, 0, 0, 0, 0.998947, 0, 0, 0, 0.998947, 0, 0, 0)
+[node name="Wall2" parent="." instance=ExtResource("1_8oopf")]
+transform = Transform3D(5, 0, 0, 0, 4, 0, 0, 0, 0.1, 0, 0, 2.5)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D"]
-shape = SubResource("BoxShape3D_udi4c")
+[node name="Wall3" parent="." instance=ExtResource("1_8oopf")]
+transform = Transform3D(-2.18557e-07, 0, 0.1, 0, 4, 0, -5, 0, -4.37114e-09, 2.5, 0, 0)
+
+[node name="Wall4" parent="." instance=ExtResource("1_8oopf")]
+transform = Transform3D(-2.18557e-07, 0, 0.1, 0, 4, 0, -5, 0, -4.37114e-09, -2.5, 0, 0)
