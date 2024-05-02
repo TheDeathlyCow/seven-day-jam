@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbp28d5bhggei"]
+[gd_scene load_steps=6 format=3 uid="uid://cbp28d5bhggei"]
 
-[ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_root.tscn" id="1_1wbn6"]
+[ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship_root.tscn" id="1_1wbn6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62wkf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,6 +15,8 @@ sky = SubResource("Sky_dgcjg")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="SphereMesh" id="SphereMesh_ree3j"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_1wbn6")]
@@ -25,3 +27,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p37cq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ree3j")
