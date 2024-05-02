@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dg52uh2jvemlm"]
+[gd_scene load_steps=6 format=3 uid="uid://dg52uh2jvemlm"]
 
 [ext_resource type="PackedScene" uid="uid://h3cpafylh5or" path="res://ship_level/wall/wall.tscn" id="1_8oopf"]
 
@@ -6,30 +6,52 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_udi4c"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_u8biq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p7gc6"]
+
 [node name="Level" type="Node3D"]
 
-[node name="Floor" type="MeshInstance3D" parent="."]
+[node name="ControlRoom" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="ControlRoom"]
 transform = Transform3D(5, 0, 0, 0, 0.04, 0, 0, 0, 5, -0.00478649, -1.97373, -0.00528836)
 mesh = SubResource("BoxMesh_uw2m3")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="ControlRoom/Floor"]
 transform = Transform3D(0.998947, 0, 0, 0, 0.998947, 0, 0, 0, 0.998947, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ControlRoom/Floor/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_udi4c")
 
-[node name="Wall" parent="." instance=ExtResource("1_8oopf")]
+[node name="Wall" parent="ControlRoom" instance=ExtResource("1_8oopf")]
 transform = Transform3D(5, 0, 0, 0, 4, 0, 0, 0, 0.1, 0, 0, -2.5)
+skeleton = NodePath("../..")
 
-[node name="Wall2" parent="." instance=ExtResource("1_8oopf")]
+[node name="Wall2" parent="ControlRoom" instance=ExtResource("1_8oopf")]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, -1.53015, 2.5)
+skeleton = NodePath("../..")
 
-[node name="Wall5" parent="." instance=ExtResource("1_8oopf")]
+[node name="Wall5" parent="ControlRoom" instance=ExtResource("1_8oopf")]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 1.49591, 2.5)
+skeleton = NodePath("../..")
 
-[node name="Wall3" parent="." instance=ExtResource("1_8oopf")]
+[node name="Wall3" parent="ControlRoom" instance=ExtResource("1_8oopf")]
 transform = Transform3D(-2.18557e-07, 0, 0.1, 0, 4, 0, -5, 0, -4.37114e-09, 2.5, 0, 0)
+skeleton = NodePath("../..")
 
-[node name="Wall4" parent="." instance=ExtResource("1_8oopf")]
+[node name="Wall4" parent="ControlRoom" instance=ExtResource("1_8oopf")]
 transform = Transform3D(-2.18557e-07, 0, 0.1, 0, 4, 0, -5, 0, -4.37114e-09, -2.5, 0, 0)
+skeleton = NodePath("../..")
+
+[node name="ShipHull" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipHull"]
+transform = Transform3D(11.8722, 0, 0, 0, 1, 0, 0, 0, 56.5606, 0, -4.99862, 22.6045)
+mesh = SubResource("BoxMesh_u8biq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipHull"]
+transform = Transform3D(7.90711, 0, 0, 0, 3.26494, 0, 0, 0, 6.20426, 0, -3.60428, 0)
+mesh = SubResource("BoxMesh_p7gc6")

@@ -20,6 +20,7 @@ glow_enabled = true
 [node name="Node3D" type="Node3D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_1wbn6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -29,4 +30,5 @@ shadow_enabled = true
 environment = SubResource("Environment_p37cq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 61.6709)
 mesh = SubResource("SphereMesh_ree3j")

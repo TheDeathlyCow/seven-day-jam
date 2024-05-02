@@ -67,8 +67,8 @@ func process_gravity(delta):
 		velocity.y -= gravity * delta
 
 	# Handle jump.
-	if not is_piloting and Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	#if not is_piloting and Input.is_action_just_pressed("jump") and is_on_floor():
+		#velocity.y = JUMP_VELOCITY
 
 
 func get_controlled_body() -> CharacterBody3D:
