@@ -1,12 +1,15 @@
 extends CharacterBody3D
 
 @export var sensitivity: float = 0.005
-
 @export var ship: CharacterBody3D
+@export var water_mesh: MeshInstance3D
+@export var water_ripple_vel_scale = 0.05
+@export var still_water_ripple_scale = 0.025
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
+const RIPPLE_PARAM_NAME = 'shader_param/ripple_time_scale'
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -31,6 +34,7 @@ func _physics_process(delta):
 	var controlled_body = get_controlled_body()
 	
 	process_gravity(delta)
+	process_shader_time_scale(controlled_body, delta)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -76,3 +80,15 @@ func get_controlled_body() -> CharacterBody3D:
 		return ship
 	else:
 		return self
+
+
+func process_shader_time_scale(controlled_body: CharacterBody3D, delta):
+	var time_scale = still_water_ripple_scale
+	if is_piloting:
+		var speed = controlled_body.velocity.length()
+		speed *= water_ripple_vel_scale
+		time_scale += speed
+	
+	var material = water_mesh.get_surface_override_material(0)
+	material.set(RIPPLE_PARAM_NAME, time_scale)
+		
