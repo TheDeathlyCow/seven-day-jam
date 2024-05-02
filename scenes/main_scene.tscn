@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbp28d5bhggei"]
 
-[ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship_root.tscn" id="1_1wbn6"]
+[ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship.tscn" id="1_1wbn6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62wkf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,6 +29,6 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p37cq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 61.6709)
+[node name="RefBall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.00542, 0, 0, 0, 1.00542, 0, 0, 0, 1.00542, 0, 0, 61.6709)
 mesh = SubResource("SphereMesh_ree3j")
