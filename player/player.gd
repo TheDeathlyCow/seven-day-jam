@@ -30,8 +30,7 @@ func _physics_process(delta):
 	
 	var controlled_body = get_controlled_body()
 	
-	if not is_piloting:
-		process_jump(delta)
+	process_gravity(delta)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -62,13 +61,13 @@ func rotate_camera(relative: Vector2):
 	rotate_object_local(Vector3.RIGHT, accumulated_rotation.y)
 
 
-func process_jump(delta):
+func process_gravity(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if not is_piloting and Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 
