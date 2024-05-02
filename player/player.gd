@@ -12,7 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var accumulated_rotation: Vector2 = Vector2(0, 0)
 
-var isPiloting = false
+var is_piloting = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,6 +24,10 @@ func _exit_tree():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _physics_process(delta):
+	
+	if is_piloting:
+		return
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -49,7 +53,7 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative)
 	if event.is_action_released('toggle_pilot_ship'):
-		isPiloting = !isPiloting
+		is_piloting = !is_piloting
 
 
 func rotate_camera(relative: Vector2):
