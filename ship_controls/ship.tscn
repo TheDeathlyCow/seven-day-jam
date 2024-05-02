@@ -21,7 +21,7 @@ ship = NodePath("..")
 [node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
 
 [node name="WaterPlane" parent="ShipController" instance=ExtResource("4_x37wq")]
-transform = Transform3D(125.159, 0, 0, 0, 18.9106, 0, 0, 0, 192.33, 0.0294247, -5.32541, 91.663)
+transform = Transform3D(125.159, 0, 0, 0, 18.9106, 0, 0, 0, 192.33, 0.0294247, -4.6825, 91.663)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5.13931, 26.7014)

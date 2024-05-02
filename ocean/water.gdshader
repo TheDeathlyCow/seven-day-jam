@@ -13,7 +13,8 @@ uniform sampler2D texture_normal2;
 uniform vec2 wave_direction = vec2(2, 0);
 uniform vec2 wave_direction2 = vec2(0, 2);
 
-uniform float time_scale : hint_range(0, 0.2, 0.005) = 0.025;
+uniform float ripple_time_scale : hint_range(0, 0.2, 0.005) = 0.025;
+uniform float wave_time_scale : hint_range(0, 10, 0.05) = 1.0;
 
 // uniforms for vertex shader
 uniform sampler2D wave_normals;
@@ -32,14 +33,15 @@ float fresnel(float amount, vec3 normal, vec3 view) {
 
 //void vertex() {
 	//world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	//height = texture(wave_normals, world_pos.xz / noise_scale + TIME * time_scale).r;
+	////height = texture(wave_normals, world_pos.xz / noise_scale + TIME * time_scale).r;
+	//height = sin(world_pos.xz / noise_scale + TIME * wave_time_scale).r;
 	//VERTEX.y += height * height_scale;
 //}
 
 void fragment() {
 	
-	vec2 offset = (TIME * wave_direction) * time_scale;
-	vec2 offset2 = (TIME * wave_direction2) * time_scale;
+	vec2 offset = (TIME * wave_direction) * ripple_time_scale;
+	vec2 offset2 = (TIME * wave_direction2) * ripple_time_scale;
 	
 	vec3 normal = mix(
 		texture(texture_normal, UV + offset).rgb, 
