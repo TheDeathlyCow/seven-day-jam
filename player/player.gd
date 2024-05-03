@@ -34,7 +34,7 @@ func _physics_process(delta):
 	var controlled_body = get_controlled_body()
 	
 	process_gravity(delta)
-	process_shader_time_scale(controlled_body, delta)
+	process_shader_time_scale(controlled_body)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -82,13 +82,8 @@ func get_controlled_body() -> CharacterBody3D:
 		return self
 
 
-func process_shader_time_scale(controlled_body: CharacterBody3D, delta):
+func process_shader_time_scale(controlled_body: CharacterBody3D):
 	var time_scale = still_water_ripple_scale
-	if is_piloting:
-		var speed = controlled_body.velocity.length()
-		speed *= water_ripple_vel_scale
-		time_scale += speed
-	
 	var material = water_mesh.get_surface_override_material(0)
 	material.set(RIPPLE_PARAM_NAME, time_scale)
 		
