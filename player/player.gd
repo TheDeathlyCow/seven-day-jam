@@ -5,8 +5,9 @@ extends CharacterBody3D
 @export var water_mesh: MeshInstance3D
 @export var water_ripple_vel_scale = 0.05
 @export var still_water_ripple_scale = 0.025
+@export var ship_rot_speed = 1e-3
+@export var SPEED = 5.0
 
-const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
 const RIPPLE_PARAM_NAME = 'ripple_time_scale'
@@ -41,14 +42,18 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		controlled_body.velocity.x = direction.x * SPEED
-		controlled_body.velocity.z = direction.z * SPEED
-	else:
-		controlled_body.velocity.x = move_toward(velocity.x, 0, SPEED)
-		controlled_body.velocity.z = move_toward(velocity.z, 0, SPEED)
+	
+	if not is_piloting:
+		if direction:
+			controlled_body.velocity.x = direction.x * SPEED
+			controlled_body.velocity.z = direction.z * SPEED
+		else:
+			controlled_body.velocity.x = move_toward(velocity.x, 0, SPEED)
+			controlled_body.velocity.z = move_toward(velocity.z, 0, SPEED)
 
-	controlled_body.move_and_slide()
+		controlled_body.move_and_slide()
+	else:
+		controlled_body.rotate(Vector3.UP, direction.x * ship_rot_speed)
 
 func _input(event):
 	if event is InputEventMouseMotion:

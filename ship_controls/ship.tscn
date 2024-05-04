@@ -12,19 +12,21 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_l7bky"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylwqg"]
-radius = 1.00725
+radius = 1.25605
 
 [node name="Ship" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")
+speed = 5.0
 
 [node name="Player" parent="ShipController" node_paths=PackedStringArray("ship", "water_mesh") instance=ExtResource("1_6v0eb")]
-transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.40423, -0.439735)
+transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
 ship = NodePath("..")
 water_mesh = NodePath("../WaterPlane")
 water_ripple_vel_scale = 0.03
+ship_rot_speed = 0.005
 
 [node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
 
@@ -60,9 +62,10 @@ mesh = SubResource("CylinderMesh_l7bky")
 surface_material_override/0 = ExtResource("5_g3kau")
 
 [node name="Area3D" type="Area3D" parent="ShipController/SteeringWheel" groups=["steering_wheel"]]
+transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, 0.0513467, -0.23473, -0.0179381)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/SteeringWheel/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, 0, -0.198897, -0.116451)
+transform = Transform3D(1, 0, 0, 0, 1, 1.77636e-14, 0, -1.77636e-14, 1, 0, -0.198897, -0.116451)
 shape = SubResource("SphereShape3D_ylwqg")
 
 [node name="Containers" type="Node3D" parent="."]

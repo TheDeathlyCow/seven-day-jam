@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbp28d5bhggei"]
+[gd_scene load_steps=6 format=3 uid="uid://cbp28d5bhggei"]
 
 [ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship.tscn" id="1_1wbn6"]
 
@@ -16,6 +16,8 @@ tonemap_mode = 2
 glow_enabled = true
 fog_enabled = true
 
+[sub_resource type="SphereMesh" id="SphereMesh_y5ixx"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_1wbn6")]
@@ -27,3 +29,7 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p37cq")
+
+[node name="RefBall" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, 0, 3.34286, 47.451)
+mesh = SubResource("SphereMesh_y5ixx")
