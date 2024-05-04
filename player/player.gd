@@ -9,7 +9,7 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
-const RIPPLE_PARAM_NAME = 'shader_param/ripple_time_scale'
+const RIPPLE_PARAM_NAME = 'ripple_time_scale'
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -34,7 +34,7 @@ func _physics_process(delta):
 	var controlled_body = get_controlled_body()
 	
 	process_gravity(delta)
-	process_shader_time_scale(controlled_body)
+	process_shader_time_scale()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -82,8 +82,8 @@ func get_controlled_body() -> CharacterBody3D:
 		return self
 
 
-func process_shader_time_scale(controlled_body: CharacterBody3D):
+func process_shader_time_scale():
 	var time_scale = still_water_ripple_scale
-	var material = water_mesh.get_surface_override_material(0)
-	material.set(RIPPLE_PARAM_NAME, time_scale)
+	var material: ShaderMaterial = water_mesh.get_surface_override_material(0)
+	material.set_shader_parameter(RIPPLE_PARAM_NAME, time_scale)
 		
