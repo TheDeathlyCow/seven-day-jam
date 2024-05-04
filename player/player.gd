@@ -45,19 +45,20 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if not is_piloting:
-		if direction:
-			controlled_body.velocity.x = direction.x * SPEED
-			controlled_body.velocity.z = direction.z * SPEED
-		else:
-			controlled_body.velocity.x = move_toward(velocity.x, 0, SPEED)
-			controlled_body.velocity.z = move_toward(velocity.z, 0, SPEED)
-
-		controlled_body.move_and_slide()
-	else:
-		controlled_body.rotate(Vector3.UP, direction.x * ship_rot_speed)
-		
+	if is_piloting:
+		controlled_body.rotate_object_local(Vector3.UP, direction.x * ship_rot_speed)
 		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
+		return
+	
+	if direction:
+		controlled_body.velocity.x = direction.x * SPEED
+		controlled_body.velocity.z = direction.z * SPEED
+	else:
+		controlled_body.velocity.x = move_toward(velocity.x, 0, SPEED)
+		controlled_body.velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	controlled_body.move_and_slide()
+
 
 func _input(event):
 	if event is InputEventMouseMotion:

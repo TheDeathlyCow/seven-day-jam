@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var body: CharacterBody3D = $'.'
 
-@export var speed: float = 1.0
+@export var speed: float = 5.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +13,9 @@ func _ready():
 func _process(_delta):
 	pass
 	
+	
 func _physics_process(delta):
-	body.velocity.z = speed
+	var movement = body.get_global_transform().basis.z * speed
+	body.velocity = movement
 	body.move_and_slide()
+	

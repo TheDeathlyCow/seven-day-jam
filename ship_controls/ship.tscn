@@ -19,14 +19,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")
-speed = 5.0
 
 [node name="Player" parent="ShipController" node_paths=PackedStringArray("ship", "water_mesh", "steering_wheel") instance=ExtResource("1_6v0eb")]
 transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
 ship = NodePath("..")
 water_mesh = NodePath("../WaterPlane")
 water_ripple_vel_scale = 0.03
-ship_rot_speed = 0.002
+ship_rot_speed = 0.01
 steering_wheel = NodePath("../SteeringWheel")
 
 [node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
