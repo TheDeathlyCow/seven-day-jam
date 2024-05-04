@@ -10,6 +10,7 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
 const RIPPLE_PARAM_NAME = 'ripple_time_scale'
+const ACTIVATE_LENGTH = 1.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -52,9 +53,11 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative)
-	if event.is_action_released('toggle_pilot_ship'):
-		is_piloting = !is_piloting
-
+	if event.is_action_released('activate'):
+		if is_piloting:
+			is_piloting = false
+		else:
+			activate()
 
 func rotate_camera(relative: Vector2):
 	accumulated_rotation.x += -relative.x * sensitivity
@@ -87,3 +90,25 @@ func process_shader_time_scale():
 	var material: ShaderMaterial = water_mesh.get_surface_override_material(0)
 	material.set_shader_parameter(RIPPLE_PARAM_NAME, time_scale)
 		
+
+func activate():
+	var space_state = get_world_3d().direct_space_state
+	var cam = $Camera3D
+	var mousepos = get_viewport().get_mouse_position()
+
+	var origin = cam.project_ray_origin(mousepos)
+	var end = origin + cam.project_ray_normal(mousepos) * ACTIVATE_LENGTH
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = true
+	query.exclude = [self]
+	
+	var result = space_state.intersect_ray(query)
+
+	if not result.has('collider'):
+		return
+	var collider = result['collider']
+	if collider != null and collider is Area3D and (collider as Area3D).get_groups().has("steering_wheel"):
+		is_piloting = true
+		print("found steering wheel")
+	else:
+		print("not the steering wheel")
