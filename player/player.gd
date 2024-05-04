@@ -6,7 +6,9 @@ extends CharacterBody3D
 @export var water_ripple_vel_scale = 0.05
 @export var still_water_ripple_scale = 0.025
 @export var ship_rot_speed = 1e-3
+@export var ship_wheel_rot_speed = 1e-2
 @export var SPEED = 5.0
+@export var steering_wheel: Node3D = null
 
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
@@ -54,6 +56,8 @@ func _physics_process(delta):
 		controlled_body.move_and_slide()
 	else:
 		controlled_body.rotate(Vector3.UP, direction.x * ship_rot_speed)
+		
+		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
 
 func _input(event):
 	if event is InputEventMouseMotion:
