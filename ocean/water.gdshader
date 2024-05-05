@@ -1,6 +1,8 @@
 shader_type spatial;
 
 // uniforms for fragmenet shader
+uniform float time = 0.0;
+
 uniform vec3 albedo: source_color;
 uniform vec3 fresnel_base_color: source_color;
 
@@ -19,7 +21,9 @@ uniform float wave_time_scale : hint_range(0, 0.2, 0.005) = 0.025;
 // uniforms for vertex shader
 uniform sampler2D wave_normals;
 
-uniform float noise_scale = 10;
+uniform float wave1_scale = 1;
+uniform float wave2_scale = 3;
+uniform float wave_height = 25;
 uniform float height_scale = 0.15;
 
 varying float height;
@@ -33,9 +37,11 @@ float fresnel(float amount, vec3 normal, vec3 view) {
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	height = texture(wave_normals, world_pos.xz / noise_scale + TIME * wave_time_scale).r;
+	
+	float height1 = wave_height * sin(world_pos.x * wave1_scale + time * wave_time_scale);
+	float height2 = wave_height * cos(world_pos.z * wave2_scale + time * wave_time_scale + PI/2.0);
 	//height = sin(world_pos.xz / noise_scale + TIME * wave_time_scale).r;
-	VERTEX.y += height * height_scale;
+	VERTEX.y += (height1 + height2) * height_scale;
 }
 
 void fragment() {

@@ -44,6 +44,7 @@ water_mesh = NodePath("../ShipController/WaterPlane")
 water_ripple_vel_scale = 0.03
 ship_rot_speed = 0.1
 steering_wheel = NodePath("../ShipController/SteeringWheel")
+max_ship_speed = 15.0
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")

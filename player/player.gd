@@ -9,10 +9,12 @@ extends CharacterBody3D
 @export var ship_wheel_rot_speed = 1e-2
 @export var SPEED = 5.0
 @export var steering_wheel: Node3D = null
+@export var max_ship_speed = 3.0
 
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
 const RIPPLE_PARAM_NAME = 'ripple_time_scale'
+const WAVE_TIME_PARAM_NAME = 'time'
 const ACTIVATE_LENGTH = 2.0
 
 signal toggle_ship_speed
@@ -24,6 +26,8 @@ var accumulated_rotation: Vector2 = Vector2(0, 0)
 var accumulated_ship_rotate: float = 0
 var is_piloting = false
 var ship_speed: int = 0
+
+var wave_time: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,14 +45,14 @@ func _physics_process(delta):
 	var controlled_body = get_controlled_body()
 	
 	process_gravity(delta)
-	process_shader_time_scale()
+	process_shader_time_scale(delta)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	var ship_velocity =  ship.get_global_transform().basis.z * ship_speed
+	var ship_velocity = ship.get_global_transform().basis.z * (ship_speed / 3) * max_ship_speed
 	self.velocity = ship_velocity
 	ship.velocity = ship_velocity
 	
@@ -112,10 +116,12 @@ func get_controlled_body() -> CharacterBody3D:
 		return self
 
 
-func process_shader_time_scale():
+func process_shader_time_scale(delta):
+	wave_time += delta
 	var time_scale = still_water_ripple_scale
 	var material: ShaderMaterial = water_mesh.get_surface_override_material(0)
 	material.set_shader_parameter(RIPPLE_PARAM_NAME, time_scale)
+	material.set_shader_parameter(WAVE_TIME_PARAM_NAME, wave_time)
 		
 
 func activate():
