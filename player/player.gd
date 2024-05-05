@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var water_mesh: MeshInstance3D
 @export var water_ripple_vel_scale = 0.05
 @export var still_water_ripple_scale = 0.025
-@export var ship_rot_speed = 1e-3
+@export var ship_rot_speed = 1e-2
 @export var ship_wheel_rot_speed = 1e-2
 @export var SPEED = 5.0
 @export var steering_wheel: Node3D = null
@@ -19,7 +19,7 @@ const ACTIVATE_LENGTH = 1.0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var accumulated_rotation: Vector2 = Vector2(0, 0)
-
+var accumulated_ship_rotate: float = 0
 var is_piloting = false
 
 # Called when the node enters the scene tree for the first time.
@@ -45,19 +45,25 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if is_piloting:
-		controlled_body.rotate_object_local(Vector3.UP, direction.x * ship_rot_speed)
-		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
-		return
+	self.velocity = ship.get_global_transform().basis.z * 2.0
 	
-	if direction:
-		controlled_body.velocity.x = direction.x * SPEED
-		controlled_body.velocity.z = direction.z * SPEED
+	if is_piloting:
+		if abs(accumulated_ship_rotate) > 10:
+			self.move_and_slide()
+			return
+		var rotation = direction.x * ship_rot_speed * delta
+		accumulated_ship_rotate += rotation
+		controlled_body.rotate_object_local(Vector3.UP, rotation)
+		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
 	else:
-		controlled_body.velocity.x = move_toward(velocity.x, 0, SPEED)
-		controlled_body.velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	controlled_body.move_and_slide()
+		if direction:		
+			controlled_body.velocity.x += direction.x * SPEED
+			controlled_body.velocity.z += direction.z * SPEED
+		else:
+			controlled_body.velocity.x += move_toward(velocity.x, 0, SPEED)
+			controlled_body.velocity.z += move_toward(velocity.z, 0, SPEED)
+		
+	self.move_and_slide()	
 
 
 func _input(event):
