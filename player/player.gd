@@ -13,7 +13,9 @@ extends CharacterBody3D
 const JUMP_VELOCITY = 4.5
 const MAX_VERTICAL_LOOK = PI / 2
 const RIPPLE_PARAM_NAME = 'ripple_time_scale'
-const ACTIVATE_LENGTH = 1.0
+const ACTIVATE_LENGTH = 2.0
+
+signal toggle_ship_speed
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -21,6 +23,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var accumulated_rotation: Vector2 = Vector2(0, 0)
 var accumulated_ship_rotate: float = 0
 var is_piloting = false
+var ship_speed: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,7 +48,9 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	self.velocity = ship.get_global_transform().basis.z * 2.0
+	var ship_velocity =  ship.get_global_transform().basis.z * ship_speed
+	self.velocity = ship_velocity
+	ship.velocity = ship_velocity
 	
 	if is_piloting:
 		
@@ -68,6 +73,7 @@ func _physics_process(delta):
 			controlled_body.velocity.z += move_toward(velocity.z, 0, SPEED)
 		
 	self.move_and_slide()	
+	ship.move_and_slide()
 
 
 func _input(event):
@@ -127,8 +133,15 @@ func activate():
 	if not result.has('collider'):
 		return
 	var collider = result['collider']
-	if collider != null and collider is Area3D and (collider as Area3D).get_groups().has("steering_wheel"):
-		is_piloting = true
-		print("found steering wheel")
-	else:
-		print("not the steering wheel")
+	if collider != null and collider is Area3D:
+		var area = collider as Area3D
+		var groups = area.get_groups()
+		if groups.has("steering_wheel"):
+			print("piloting")
+			is_piloting = true
+		elif groups.has("speed_dial"):
+			print("toggle speed")
+			ship_speed += 1
+			ship_speed %= 4
+			toggle_ship_speed.emit()
+			

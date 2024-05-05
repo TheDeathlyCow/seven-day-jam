@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c34kxvuj4tqf4"]
+[gd_scene load_steps=18 format=3 uid="uid://c34kxvuj4tqf4"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_6v0eb"]
 [ext_resource type="Script" path="res://ship_controls/ship_control.gd" id="1_lbqn1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwq280xjn67uj" path="res://ocean/water_plane.tscn" id="4_x37wq"]
 [ext_resource type="PackedScene" uid="uid://h1svyrkxdv2w" path="res://container/container.tscn" id="5_b0ada"]
 [ext_resource type="Material" uid="uid://pgnlhh6aum4t" path="res://ship_controls/steering_wheel.tres" id="5_g3kau"]
+[ext_resource type="Script" path="res://ship_controls/speed_dial.gd" id="6_4hlel"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_r15q6"]
 
@@ -13,6 +14,24 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylwqg"]
 radius = 1.25605
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ao7sa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_acl6s"]
+albedo_color = Color(0.844332, 0.712236, 0.622905, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_76ksr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dneac"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_cl1m7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hu5ey"]
+albedo_color = Color(0.915884, 0.3645, 0.305169, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s4hto"]
+radius = 0.94862
 
 [node name="Ship" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
@@ -68,6 +87,54 @@ transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, 0.051346
 transform = Transform3D(1, 0, 0, 0, 1, 1.77636e-14, 0, -1.77636e-14, 1, 0, -0.198897, -0.116451)
 shape = SubResource("SphereShape3D_ylwqg")
 
+[node name="SpeedControl" type="Node3D" parent="ShipController" node_paths=PackedStringArray("indicator")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37485, -0.824287, 0)
+script = ExtResource("6_4hlel")
+indicator = NodePath("indicator")
+
+[node name="Base" type="MeshInstance3D" parent="ShipController/SpeedControl"]
+transform = Transform3D(-3.04747e-08, -0.0765197, 0, 0.69718, -3.34478e-09, 0, 0, 0, 0.69718, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ao7sa")
+surface_material_override/0 = SubResource("StandardMaterial3D_acl6s")
+
+[node name="Label3D" type="Label3D" parent="ShipController/SpeedControl/Base"]
+transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93462e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.0176345, 1.48545, -0.339409)
+text = "Slow"
+font_size = 16
+
+[node name="Label3D2" type="Label3D" parent="ShipController/SpeedControl/Base"]
+transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93463e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.369909, 1.48545, -0.0113624)
+text = "Medium"
+font_size = 16
+
+[node name="Label3D3" type="Label3D" parent="ShipController/SpeedControl/Base"]
+transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93462e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.0176345, 1.48545, 0.343638)
+text = "FAST"
+font_size = 16
+
+[node name="Label3D4" type="Label3D" parent="ShipController/SpeedControl/Base"]
+transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93463e-07, -4.41972e-07, 1, 1, 3.89138e-08, -3.93462e-07, -0.358729, 1.48545, 0.00295927)
+modulate = Color(0.618518, 0.15704, 0.184233, 1)
+text = "STOP"
+font_size = 25
+
+[node name="indicator" type="Node3D" parent="ShipController/SpeedControl"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipController/SpeedControl/indicator"]
+transform = Transform3D(0.095, 0, 0, 0, 0.153834, 0, 0, 0, 0.0530649, -0.0769579, 0, 0)
+mesh = SubResource("CapsuleMesh_76ksr")
+surface_material_override/0 = SubResource("StandardMaterial3D_dneac")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipController/SpeedControl/indicator"]
+transform = Transform3D(4.15258e-09, 8.30516e-09, -0.095, -8.30516e-09, -0.095, -8.30516e-09, -0.095, 8.30516e-09, -4.15258e-09, -0.0799108, -0.135168, 0)
+mesh = SubResource("PrismMesh_cl1m7")
+surface_material_override/0 = SubResource("StandardMaterial3D_hu5ey")
+
+[node name="Area3D" type="Area3D" parent="ShipController/SpeedControl" groups=["speed_dial"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/SpeedControl/Area3D" groups=["speed_dial"]]
+shape = SubResource("SphereShape3D_s4hto")
+
 [node name="Containers" type="Node3D" parent="."]
 
 [node name="Container" parent="Containers" instance=ExtResource("5_b0ada")]
@@ -78,3 +145,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74331, -2.70096, 12.2669)
 
 [node name="Container3" parent="Containers" instance=ExtResource("5_b0ada")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14639, -2.70096, 12.2669)
+
+[connection signal="toggle_ship_speed" from="Player" to="ShipController/SpeedControl" method="cycle_state"]
