@@ -22,7 +22,7 @@ transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926
 ship = NodePath("../ShipController")
 water_mesh = NodePath("../ShipController/WaterPlane")
 water_ripple_vel_scale = 0.03
-ship_rot_speed = 0.01
+ship_rot_speed = 0.1
 steering_wheel = NodePath("../ShipController/SteeringWheel")
 
 [node name="ShipController" type="CharacterBody3D" parent="."]

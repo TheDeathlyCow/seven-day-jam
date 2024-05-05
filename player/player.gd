@@ -48,11 +48,15 @@ func _physics_process(delta):
 	self.velocity = ship.get_global_transform().basis.z * 2.0
 	
 	if is_piloting:
-		if abs(accumulated_ship_rotate) > 10:
+		
+		var rotation = direction.x * ship_rot_speed * delta
+		var next_accumulated_rotation = accumulated_ship_rotate + rotation
+		
+		if abs(next_accumulated_rotation) > PI / 9:
 			self.move_and_slide()
 			return
-		var rotation = direction.x * ship_rot_speed * delta
-		accumulated_ship_rotate += rotation
+		
+		accumulated_ship_rotate = next_accumulated_rotation
 		controlled_body.rotate_object_local(Vector3.UP, rotation)
 		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
 	else:
