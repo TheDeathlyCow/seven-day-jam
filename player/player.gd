@@ -61,9 +61,10 @@ func _physics_process(delta):
 			self.move_and_slide()
 			return
 		
-		accumulated_ship_rotate = next_accumulated_rotation
-		controlled_body.rotate_object_local(Vector3.UP, rotation)
-		steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
+		if ship.velocity.length_squared() > 0:
+			accumulated_ship_rotate = next_accumulated_rotation
+			controlled_body.rotate_object_local(Vector3.UP, rotation)
+			steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
 	else:
 		if direction:		
 			controlled_body.velocity.x += direction.x * SPEED

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c34kxvuj4tqf4"]
+[gd_scene load_steps=19 format=3 uid="uid://c34kxvuj4tqf4"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_6v0eb"]
 [ext_resource type="Script" path="res://ship_controls/ship_control.gd" id="1_lbqn1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://h1svyrkxdv2w" path="res://container/container.tscn" id="5_b0ada"]
 [ext_resource type="Material" uid="uid://pgnlhh6aum4t" path="res://ship_controls/steering_wheel.tres" id="5_g3kau"]
 [ext_resource type="Script" path="res://ship_controls/speed_dial.gd" id="6_4hlel"]
+[ext_resource type="PackedScene" uid="uid://b10ngf3y8ju4g" path="res://hud/hud.tscn" id="8_mpocr"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_r15q6"]
 
@@ -134,6 +135,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_hu5ey")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/SpeedControl/Area3D" groups=["speed_dial"]]
 shape = SubResource("SphereShape3D_s4hto")
+
+[node name="HUD" parent="ShipController" node_paths=PackedStringArray("ship_body") instance=ExtResource("8_mpocr")]
+ship_body = NodePath("..")
 
 [node name="Containers" type="Node3D" parent="."]
 
