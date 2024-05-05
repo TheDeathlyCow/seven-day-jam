@@ -46,13 +46,14 @@ func _physics_process(delta):
 	
 	process_gravity(delta)
 	process_shader_time_scale(delta)
+	process_wave_height()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	var ship_velocity = ship.get_global_transform().basis.z * (ship_speed / 3) * max_ship_speed
+	var ship_velocity = ship.get_global_transform().basis.z * (ship_speed / 3.0) * max_ship_speed
 	self.velocity = ship_velocity
 	ship.velocity = ship_velocity
 	
@@ -152,3 +153,19 @@ func activate():
 			ship_speed %= 4
 			toggle_ship_speed.emit()
 			
+
+func process_wave_height():
+	var wave_height = 75
+	var wave1_scale = 0.032
+	var wave2_scale = 0.044
+	var wave_time_scale = 0.2
+	var world_pos = ship.global_position
+	
+	var height1 = wave_height * sin(world_pos.x * wave1_scale + wave_time * wave_time_scale);
+	var height2 = wave_height * cos(world_pos.z * wave2_scale + wave_time * wave_time_scale + PI/2.0);
+	
+	var height = height1 + height2 
+	
+	ship.global_position.y += height
+	self.global_position.y += height
+	

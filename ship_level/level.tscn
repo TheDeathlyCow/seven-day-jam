@@ -26,7 +26,6 @@ mesh = SubResource("BoxMesh_uw2m3")
 skeleton = NodePath("../..")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ControlRoom/Floor"]
-transform = Transform3D(0.998947, 0, 0, 0, 0.998947, 0, 0, 0, 0.998947, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ControlRoom/Floor/StaticBody3D"]
 shape = SubResource("BoxShape3D_udi4c")

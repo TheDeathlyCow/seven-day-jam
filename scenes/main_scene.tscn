@@ -32,9 +32,11 @@ environment = SubResource("Environment_p37cq")
 
 [node name="RefBall" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, 0, 3.34286, 47.451)
+visible = false
 mesh = SubResource("SphereMesh_y5ixx")
 
 [node name="RefBall2" type="MeshInstance3D" parent="."]
 transform = Transform3D(28.1961, 0, 0, 0, 28.1961, 0, 0, 0, 28.1961, -86.6636, 20.8842, 3.89822)
+visible = false
 mesh = SubResource("SphereMesh_y5ixx")
 skeleton = NodePath("../RefBall")

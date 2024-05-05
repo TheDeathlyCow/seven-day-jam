@@ -39,106 +39,112 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("ship", "water_mesh", "steering_wheel") instance=ExtResource("1_6v0eb")]
 transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
+sensitivity = 0.005
 ship = NodePath("../ShipController")
 water_mesh = NodePath("../ShipController/WaterPlane")
 water_ripple_vel_scale = 0.03
+still_water_ripple_scale = 0.025
 ship_rot_speed = 0.1
-steering_wheel = NodePath("../ShipController/SteeringWheel")
-max_ship_speed = 15.0
+ship_wheel_rot_speed = 0.01
+SPEED = 5.0
+steering_wheel = NodePath("../ShipController/Ship/SteeringWheel")
+max_ship_speed = 3.0
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")
 
-[node name="ShipLevel" parent="ShipController" instance=ExtResource("2_vfkjq")]
-
 [node name="WaterPlane" parent="ShipController" instance=ExtResource("4_x37wq")]
 transform = Transform3D(124.309, 0, 0, 0, 1, 0, 0, 0, 153.4, 7.98322, -5.31386, 73.3912)
 
-[node name="SteeringWheel" type="Node3D" parent="ShipController"]
+[node name="HUD" parent="ShipController" node_paths=PackedStringArray("ship_body") instance=ExtResource("8_mpocr")]
+ship_body = NodePath("..")
+
+[node name="Ship" type="Node3D" parent="ShipController"]
+
+[node name="ShipLevel" parent="ShipController/Ship" instance=ExtResource("2_vfkjq")]
+
+[node name="SteeringWheel" type="Node3D" parent="ShipController/Ship"]
 transform = Transform3D(0.575, 0, 0, 0, -2.5134e-08, 0.575, 0, -0.575, -2.5134e-08, 0, -1.10209, 2.03946)
 
-[node name="Disk" type="MeshInstance3D" parent="ShipController/SteeringWheel"]
+[node name="Disk" type="MeshInstance3D" parent="ShipController/Ship/SteeringWheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 3.19744e-14, 0, -3.19744e-14, 1, 0, -0.41945, -0.277881)
 mesh = SubResource("TorusMesh_r15q6")
 surface_material_override/0 = ExtResource("5_g3kau")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipController/SteeringWheel"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipController/Ship/SteeringWheel"]
 transform = Transform3D(0.252277, 0, 0, 0, -5.1058e-08, -0.252277, 0, 1.16807, -1.10274e-08, 0, -0.416169, -0.230368)
 mesh = SubResource("CylinderMesh_l7bky")
 surface_material_override/0 = ExtResource("5_g3kau")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipController/SteeringWheel"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipController/Ship/SteeringWheel"]
 transform = Transform3D(-1.10274e-08, -1.16807, -3.86165e-15, -1.10274e-08, 2.69464e-14, -0.252277, 0.252277, -5.1058e-08, -1.10274e-08, 0, -0.416169, -0.230368)
 mesh = SubResource("CylinderMesh_l7bky")
 surface_material_override/0 = ExtResource("5_g3kau")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="ShipController/SteeringWheel"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="ShipController/Ship/SteeringWheel"]
 transform = Transform3D(0.178386, -0.825951, -2.31699e-15, -7.79752e-09, -3.61034e-08, -0.252277, 0.178386, 0.825951, -1.10274e-08, 0, -0.416169, -0.230368)
 mesh = SubResource("CylinderMesh_l7bky")
 surface_material_override/0 = ExtResource("5_g3kau")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="ShipController/SteeringWheel"]
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="ShipController/Ship/SteeringWheel"]
 transform = Transform3D(0.178386, 0.825951, 2.31699e-15, 7.79752e-09, -3.61034e-08, -0.252277, -0.178386, 0.825951, -1.10274e-08, 0, -0.416169, -0.230368)
 mesh = SubResource("CylinderMesh_l7bky")
 surface_material_override/0 = ExtResource("5_g3kau")
 
-[node name="Area3D" type="Area3D" parent="ShipController/SteeringWheel" groups=["steering_wheel"]]
+[node name="Area3D" type="Area3D" parent="ShipController/Ship/SteeringWheel" groups=["steering_wheel"]]
 transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, 0.0513467, -0.23473, -0.0179381)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/SteeringWheel/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Ship/SteeringWheel/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 1.77636e-14, 0, -1.77636e-14, 1, 0, -0.198897, -0.116451)
 shape = SubResource("SphereShape3D_ylwqg")
 
-[node name="SpeedControl" type="Node3D" parent="ShipController" node_paths=PackedStringArray("indicator")]
+[node name="SpeedControl" type="Node3D" parent="ShipController/Ship" node_paths=PackedStringArray("indicator")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37485, -0.824287, 0)
 script = ExtResource("6_4hlel")
 indicator = NodePath("indicator")
 
-[node name="Base" type="MeshInstance3D" parent="ShipController/SpeedControl"]
+[node name="Base" type="MeshInstance3D" parent="ShipController/Ship/SpeedControl"]
 transform = Transform3D(-3.04747e-08, -0.0765197, 0, 0.69718, -3.34478e-09, 0, 0, 0, 0.69718, 0, 0, 0)
 mesh = SubResource("CylinderMesh_ao7sa")
 surface_material_override/0 = SubResource("StandardMaterial3D_acl6s")
 
-[node name="Label3D" type="Label3D" parent="ShipController/SpeedControl/Base"]
+[node name="Label3D" type="Label3D" parent="ShipController/Ship/SpeedControl/Base"]
 transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93462e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.0176345, 1.48545, -0.339409)
 text = "Slow"
 font_size = 16
 
-[node name="Label3D2" type="Label3D" parent="ShipController/SpeedControl/Base"]
+[node name="Label3D2" type="Label3D" parent="ShipController/Ship/SpeedControl/Base"]
 transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93463e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.369909, 1.48545, -0.0113624)
 text = "Medium"
 font_size = 16
 
-[node name="Label3D3" type="Label3D" parent="ShipController/SpeedControl/Base"]
+[node name="Label3D3" type="Label3D" parent="ShipController/Ship/SpeedControl/Base"]
 transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93462e-07, -4.41971e-07, 1, 1, 3.89138e-08, -3.93462e-07, 0.0176345, 1.48545, 0.343638)
 text = "FAST"
 font_size = 16
 
-[node name="Label3D4" type="Label3D" parent="ShipController/SpeedControl/Base"]
+[node name="Label3D4" type="Label3D" parent="ShipController/Ship/SpeedControl/Base"]
 transform = Transform3D(-3.89136e-08, 1, 4.41971e-07, 3.93463e-07, -4.41972e-07, 1, 1, 3.89138e-08, -3.93462e-07, -0.358729, 1.48545, 0.00295927)
 modulate = Color(0.618518, 0.15704, 0.184233, 1)
 text = "STOP"
 font_size = 25
 
-[node name="indicator" type="Node3D" parent="ShipController/SpeedControl"]
+[node name="indicator" type="Node3D" parent="ShipController/Ship/SpeedControl"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipController/SpeedControl/indicator"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShipController/Ship/SpeedControl/indicator"]
 transform = Transform3D(0.095, 0, 0, 0, 0.153834, 0, 0, 0, 0.0530649, -0.0769579, 0, 0)
 mesh = SubResource("CapsuleMesh_76ksr")
 surface_material_override/0 = SubResource("StandardMaterial3D_dneac")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipController/SpeedControl/indicator"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShipController/Ship/SpeedControl/indicator"]
 transform = Transform3D(4.15258e-09, 8.30516e-09, -0.095, -8.30516e-09, -0.095, -8.30516e-09, -0.095, 8.30516e-09, -4.15258e-09, -0.0799108, -0.135168, 0)
 mesh = SubResource("PrismMesh_cl1m7")
 surface_material_override/0 = SubResource("StandardMaterial3D_hu5ey")
 
-[node name="Area3D" type="Area3D" parent="ShipController/SpeedControl" groups=["speed_dial"]]
+[node name="Area3D" type="Area3D" parent="ShipController/Ship/SpeedControl" groups=["speed_dial"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/SpeedControl/Area3D" groups=["speed_dial"]]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Ship/SpeedControl/Area3D" groups=["speed_dial"]]
 shape = SubResource("SphereShape3D_s4hto")
-
-[node name="HUD" parent="ShipController" node_paths=PackedStringArray("ship_body") instance=ExtResource("8_mpocr")]
-ship_body = NodePath("..")
 
 [node name="Containers" type="Node3D" parent="."]
 
@@ -151,4 +157,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74331, -2.70096, 12.2669)
 [node name="Container3" parent="Containers" instance=ExtResource("5_b0ada")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14639, -2.70096, 12.2669)
 
-[connection signal="toggle_ship_speed" from="Player" to="ShipController/SpeedControl" method="cycle_state"]
+[connection signal="toggle_ship_speed" from="Player" to="ShipController/Ship/SpeedControl" method="cycle_state"]
