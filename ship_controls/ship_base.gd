@@ -1,6 +1,6 @@
 extends Node3D
 
-signal area_entered(area: Area3D)
+@export var player: CharacterBody3D
 
 func _area_entered(area):
-	area_entered.emit(area)
+	player.area_entered(area)

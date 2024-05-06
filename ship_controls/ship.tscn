@@ -42,9 +42,10 @@ size = Vector3(1, 1, 26.0864)
 [sub_resource type="BoxShape3D" id="BoxShape3D_i0irc"]
 size = Vector3(1, 1, 27.6519)
 
-[node name="Ship" type="Node3D"]
+[node name="Ship" type="Node3D" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 script = ExtResource("1_j7sjp")
+player = NodePath("Player")
 
 [node name="Player" parent="." node_paths=PackedStringArray("ship", "water_mesh", "steering_wheel") instance=ExtResource("1_6v0eb")]
 transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
@@ -387,7 +388,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 27.7238)
 [node name="Container72" parent="Containers" instance=ExtResource("5_b0ada")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 27.7238)
 
-[connection signal="area_entered" from="." to="Player" method="area_entered"]
 [connection signal="toggle_ship_speed" from="Player" to="ShipController/Ship/SpeedControl" method="cycle_state"]
 [connection signal="update_heading" from="Player" to="ShipController/HUD" method="update_heading"]
 [connection signal="update_ship_velocity" from="Player" to="Containers" method="on_velocity_update"]

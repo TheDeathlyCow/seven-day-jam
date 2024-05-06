@@ -185,8 +185,8 @@ func process_wave_height(delta):
 		ship.velocity.y -= gravity * delta
 		print('push down')
 
-func area_entered(area):
-	if area is Area3D:
-		if (area as Area3D).get_groups().has('end'):
-			ended = true
+func area_entered(area: Area3D):
+	if area.get_groups().has('end'):
+		ended = true
+		print('END')
 	

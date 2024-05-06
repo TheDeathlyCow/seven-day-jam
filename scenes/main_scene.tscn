@@ -96,7 +96,7 @@ mesh = SubResource("CylinderMesh_4ucup")
 surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
 
 [node name="End" type="Node3D" parent="Guides"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 529.247, 51.3174, 1400)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 454.393, 43.032, 1400)
 
 [node name="MeshInstance3D9" type="MeshInstance3D" parent="Guides/End"]
 transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 0, 0, 0)
@@ -116,4 +116,4 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.9762, 0)
 shape = SubResource("SphereShape3D_u2myt")
 
-[connection signal="area_entered" from="Ship" to="Ship/Player" method="area_entered"]
+[connection signal="area_entered" from="Guides/End/Area3D" to="Ship" method="_area_entered"]
