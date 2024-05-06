@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c34kxvuj4tqf4"]
+[gd_scene load_steps=22 format=3 uid="uid://c34kxvuj4tqf4"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_6v0eb"]
 [ext_resource type="Script" path="res://ship_controls/ship_control.gd" id="1_lbqn1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://h1svyrkxdv2w" path="res://container/container.tscn" id="5_b0ada"]
 [ext_resource type="Material" uid="uid://pgnlhh6aum4t" path="res://ship_controls/steering_wheel.tres" id="5_g3kau"]
 [ext_resource type="Script" path="res://ship_controls/speed_dial.gd" id="6_4hlel"]
+[ext_resource type="Script" path="res://ship_controls/containers.gd" id="8_hm3ei"]
 [ext_resource type="PackedScene" uid="uid://b10ngf3y8ju4g" path="res://hud/hud.tscn" id="8_mpocr"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_r15q6"]
@@ -34,21 +35,22 @@ albedo_color = Color(0.915884, 0.3645, 0.305169, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_s4hto"]
 radius = 0.94862
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1wlw6"]
+size = Vector3(1, 1, 26.0864)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i0irc"]
+size = Vector3(1, 1, 27.6519)
+
 [node name="Ship" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("ship", "water_mesh", "steering_wheel") instance=ExtResource("1_6v0eb")]
 transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
-sensitivity = 0.005
 ship = NodePath("../ShipController")
 water_mesh = NodePath("../ShipController/WaterPlane")
 water_ripple_vel_scale = 0.03
-still_water_ripple_scale = 0.025
 ship_rot_speed = 0.1
-ship_wheel_rot_speed = 0.01
-SPEED = 5.0
 steering_wheel = NodePath("../ShipController/Ship/SteeringWheel")
-max_ship_speed = 3.0
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")
@@ -146,15 +148,246 @@ surface_material_override/0 = SubResource("StandardMaterial3D_hu5ey")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Ship/SpeedControl/Area3D" groups=["speed_dial"]]
 shape = SubResource("SphereShape3D_s4hto")
 
+[node name="Anchors" type="Node3D" parent="ShipController"]
+visible = false
+
+[node name="Port" type="StaticBody3D" parent="ShipController/Anchors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.13835, -3.95341, 4.28407)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Anchors/Port"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.5432)
+shape = SubResource("BoxShape3D_1wlw6")
+
+[node name="Starboard" type="StaticBody3D" parent="ShipController/Anchors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.22044, -3.9644, 3.98466)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Anchors/Starboard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.326)
+shape = SubResource("BoxShape3D_i0irc")
+
+[node name="Area3D" type="Area3D" parent="ShipController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.29165, 14.9997)
+
 [node name="Containers" type="Node3D" parent="."]
+script = ExtResource("8_hm3ei")
 
 [node name="Container" parent="Containers" instance=ExtResource("5_b0ada")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.70096, 12.2669)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 5.41218)
+
+[node name="Container7" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 5.41218)
+
+[node name="Container8" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 5.41218)
+
+[node name="Container9" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 5.41218)
+
+[node name="Container10" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 5.41218)
+
+[node name="Container11" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 5.41218)
+
+[node name="Container12" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 5.41218)
 
 [node name="Container2" parent="Containers" instance=ExtResource("5_b0ada")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74331, -2.70096, 12.2669)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 5.41218)
 
 [node name="Container3" parent="Containers" instance=ExtResource("5_b0ada")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14639, -2.70096, 12.2669)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 5.41218)
+
+[node name="Container4" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 5.41218)
+
+[node name="Container5" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 5.41218)
+
+[node name="Container6" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 5.41218)
+
+[node name="Container13" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 10.0296)
+
+[node name="Container14" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 10.0296)
+
+[node name="Container15" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 10.0296)
+
+[node name="Container16" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 10.0296)
+
+[node name="Container17" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 10.0296)
+
+[node name="Container18" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 10.0296)
+
+[node name="Container19" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 10.0296)
+
+[node name="Container20" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 10.0296)
+
+[node name="Container21" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 10.0296)
+
+[node name="Container22" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 10.0296)
+
+[node name="Container23" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 10.0296)
+
+[node name="Container24" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 10.0296)
+
+[node name="Container25" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 14.6179)
+
+[node name="Container26" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 14.6179)
+
+[node name="Container27" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 14.6179)
+
+[node name="Container28" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 14.6179)
+
+[node name="Container29" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 14.6179)
+
+[node name="Container30" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 14.6179)
+
+[node name="Container31" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 14.6179)
+
+[node name="Container32" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 14.6179)
+
+[node name="Container33" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 14.6179)
+
+[node name="Container34" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 14.6179)
+
+[node name="Container35" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 14.6179)
+
+[node name="Container36" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 14.6179)
+
+[node name="Container37" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 19.3695)
+
+[node name="Container38" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 19.3695)
+
+[node name="Container39" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 19.3695)
+
+[node name="Container40" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 19.3695)
+
+[node name="Container41" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 19.3695)
+
+[node name="Container42" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 19.3695)
+
+[node name="Container43" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 19.3695)
+
+[node name="Container44" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 19.3695)
+
+[node name="Container45" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 19.3695)
+
+[node name="Container46" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 19.3695)
+
+[node name="Container47" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 19.3695)
+
+[node name="Container48" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 19.3695)
+
+[node name="Container49" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 23.6778)
+
+[node name="Container50" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 23.6778)
+
+[node name="Container51" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 23.6778)
+
+[node name="Container52" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 23.6778)
+
+[node name="Container53" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 23.6778)
+
+[node name="Container54" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 23.6778)
+
+[node name="Container55" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 23.6778)
+
+[node name="Container56" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 23.6778)
+
+[node name="Container57" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 23.6778)
+
+[node name="Container58" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 23.6778)
+
+[node name="Container59" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 23.6778)
+
+[node name="Container60" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 23.6778)
+
+[node name="Container61" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -3.89343, 27.7238)
+
+[node name="Container62" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.88842, -2.5848, 27.7238)
+
+[node name="Container63" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93088, -2.5848, 27.7238)
+
+[node name="Container64" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933494, -2.5848, 27.7238)
+
+[node name="Container65" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09454, -2.5848, 27.7238)
+
+[node name="Container66" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.87293, -2.5848, 27.7238)
+
+[node name="Container67" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.84297, -2.5848, 27.7238)
+
+[node name="Container68" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93286, -3.89343, 27.7238)
+
+[node name="Container69" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.900446, -3.89343, 27.7238)
+
+[node name="Container70" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07087, -3.89343, 27.7238)
+
+[node name="Container71" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 27.7238)
+
+[node name="Container72" parent="Containers" instance=ExtResource("5_b0ada")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 27.7238)
 
 [connection signal="toggle_ship_speed" from="Player" to="ShipController/Ship/SpeedControl" method="cycle_state"]
+[connection signal="update_heading" from="Player" to="ShipController/HUD" method="update_heading"]
+[connection signal="update_ship_velocity" from="Player" to="Containers" method="on_velocity_update"]
+[connection signal="on_container_overboard" from="Containers" to="ShipController/HUD" method="update_containers_left"]

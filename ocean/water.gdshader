@@ -38,10 +38,10 @@ float fresnel(float amount, vec3 normal, vec3 view) {
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	
-	float height1 = wave_height * sin(world_pos.x * wave1_scale + time * wave_time_scale);
-	float height2 = wave_height * cos(world_pos.z * wave2_scale + time * wave_time_scale + PI/2.0);
-	//height = sin(world_pos.xz / noise_scale + TIME * wave_time_scale).r;
-	VERTEX.y += (height1 + height2) * height_scale;
+	//float height1 = wave_height * sin(world_pos.x * wave1_scale + time * wave_time_scale);
+	//float height2 = wave_height * cos(world_pos.z * wave2_scale + time * wave_time_scale + PI/2.0);
+	////height = sin(world_pos.xz / noise_scale + TIME * wave_time_scale).r;
+	//VERTEX.y += (height1 + height2) * height_scale;
 }
 
 void fragment() {

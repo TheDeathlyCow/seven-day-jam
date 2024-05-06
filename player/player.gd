@@ -18,6 +18,8 @@ const WAVE_TIME_PARAM_NAME = 'time'
 const ACTIVATE_LENGTH = 2.0
 
 signal toggle_ship_speed
+signal update_ship_velocity(velocity: Vector3)
+signal update_heading(heading: float)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -46,14 +48,22 @@ func _physics_process(delta):
 	
 	process_gravity(delta)
 	process_shader_time_scale(delta)
-	process_wave_height()
+	#process_wave_height()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	
+	if is_piloting:
+		input_dir.y = 0
+	
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	var ship_velocity = ship.get_global_transform().basis.z * (ship_speed / 3.0) * max_ship_speed
+
+		
+	ship_velocity = ship_velocity.rotated(Vector3.UP, accumulated_ship_rotate)
+	update_ship_velocity.emit(ship_velocity)
 	self.velocity = ship_velocity
 	ship.velocity = ship_velocity
 	
@@ -62,13 +72,10 @@ func _physics_process(delta):
 		var rotation = direction.x * ship_rot_speed * delta
 		var next_accumulated_rotation = accumulated_ship_rotate + rotation
 		
-		if abs(next_accumulated_rotation) > PI / 9:
-			self.move_and_slide()
-			return
-		
-		if ship.velocity.length_squared() > 0:
+		if abs(next_accumulated_rotation) <= PI / 9 and ship.velocity.length_squared() > 0:
 			accumulated_ship_rotate = next_accumulated_rotation
-			controlled_body.rotate_object_local(Vector3.UP, rotation)
+			update_heading.emit(accumulated_ship_rotate)
+			#controlled_body.rotate_object_local(Vector3.UP, rotation)
 			steering_wheel.rotate_object_local(Vector3.UP, direction.x * ship_wheel_rot_speed)
 	else:
 		if direction:		

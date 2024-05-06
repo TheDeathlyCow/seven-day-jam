@@ -21,7 +21,7 @@ fog_enabled = true
 [node name="Node3D" type="Node3D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_1wbn6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.14921, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -31,12 +31,11 @@ shadow_enabled = true
 environment = SubResource("Environment_p37cq")
 
 [node name="RefBall" type="MeshInstance3D" parent="."]
-transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, 0, 3.34286, 47.451)
-visible = false
+transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, 0, 11.4921, 47.451)
 mesh = SubResource("SphereMesh_y5ixx")
 
 [node name="RefBall2" type="MeshInstance3D" parent="."]
-transform = Transform3D(28.1961, 0, 0, 0, 28.1961, 0, 0, 0, 28.1961, -86.6636, 20.8842, 3.89822)
+transform = Transform3D(28.1961, 0, 0, 0, 28.1961, 0, 0, 0, 28.1961, -86.6636, 29.0334, 3.89822)
 visible = false
 mesh = SubResource("SphereMesh_y5ixx")
 skeleton = NodePath("../RefBall")
