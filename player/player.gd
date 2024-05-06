@@ -48,7 +48,6 @@ func _physics_process(delta):
 	
 	process_gravity(delta)
 	process_shader_time_scale(delta)
-	#process_wave_height()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -72,7 +71,7 @@ func _physics_process(delta):
 		var rotation = direction.x * ship_rot_speed * delta
 		var next_accumulated_rotation = accumulated_ship_rotate + rotation
 		
-		if abs(next_accumulated_rotation) <= PI / 9 and ship.velocity.length_squared() > 0:
+		if abs(next_accumulated_rotation) <= PI / 4 and ship.velocity.length_squared() > 0:
 			accumulated_ship_rotate = next_accumulated_rotation
 			update_heading.emit(accumulated_ship_rotate)
 			#controlled_body.rotate_object_local(Vector3.UP, rotation)
@@ -161,7 +160,7 @@ func activate():
 			toggle_ship_speed.emit()
 			
 
-func process_wave_height():
+func process_wave_height(delta):
 	var wave_height = 75
 	var wave1_scale = 0.032
 	var wave2_scale = 0.044
@@ -169,10 +168,14 @@ func process_wave_height():
 	var world_pos = ship.global_position
 	
 	var height1 = wave_height * sin(world_pos.x * wave1_scale + wave_time * wave_time_scale);
-	var height2 = wave_height * cos(world_pos.z * wave2_scale + wave_time * wave_time_scale + PI/2.0);
+	#var height2 = wave_height * cos(world_pos.z * wave2_scale + wave_time * wave_time_scale + PI/2.0);
 	
-	var height = height1 + height2 
+	var height = height1 
 	
-	ship.global_position.y += height
-	self.global_position.y += height
-	
+	if height > ship.global_position.y - 10:
+		ship.global_position.y = height - 5
+		self.global_position.y = height - 5
+		print('push up')
+	else:
+		ship.velocity.y -= gravity * delta
+		print('push down')

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbp28d5bhggei"]
+[gd_scene load_steps=8 format=3 uid="uid://cbp28d5bhggei"]
 
 [ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship.tscn" id="1_1wbn6"]
 
@@ -18,6 +18,13 @@ fog_enabled = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_y5ixx"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_4ucup"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc5f8"]
+albedo_color = Color(0.848378, 0.8435, 1.15514e-06, 1)
+emission_enabled = true
+emission = Color(0.93408, 0.93408, 0.93408, 1)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Ship" parent="." instance=ExtResource("1_1wbn6")]
@@ -32,6 +39,7 @@ environment = SubResource("Environment_p37cq")
 
 [node name="RefBall" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, 0, 11.4921, 47.451)
+visible = false
 mesh = SubResource("SphereMesh_y5ixx")
 
 [node name="RefBall2" type="MeshInstance3D" parent="."]
@@ -39,3 +47,45 @@ transform = Transform3D(28.1961, 0, 0, 0, 28.1961, 0, 0, 0, 28.1961, -86.6636, 2
 visible = false
 mesh = SubResource("SphereMesh_y5ixx")
 skeleton = NodePath("../RefBall")
+
+[node name="Guides" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 23.0975, 13.33, 107.384)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, -58.0372, 13.33, 276.738)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, -25.6451, 13.33, 440.095)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 49.0956, 13.33, 567.288)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 180.169, 13.33, 713.152)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 305.915, 13.33, 940.05)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 373.093, 13.33, 1105.24)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Guides"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 406.986, 13.33, 1251.66)
+mesh = SubResource("CylinderMesh_4ucup")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")

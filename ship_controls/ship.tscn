@@ -51,12 +51,13 @@ water_mesh = NodePath("../ShipController/WaterPlane")
 water_ripple_vel_scale = 0.03
 ship_rot_speed = 0.1
 steering_wheel = NodePath("../ShipController/Ship/SteeringWheel")
+max_ship_speed = 7.0
 
 [node name="ShipController" type="CharacterBody3D" parent="."]
 script = ExtResource("1_lbqn1")
 
 [node name="WaterPlane" parent="ShipController" instance=ExtResource("4_x37wq")]
-transform = Transform3D(124.309, 0, 0, 0, 1, 0, 0, 0, 153.4, 7.98322, -5.31386, 73.3912)
+transform = Transform3D(329.797, 0, 0, 0, 1, 0, 0, 0, 308.225, 7.98322, -5.31386, 149.775)
 
 [node name="HUD" parent="ShipController" node_paths=PackedStringArray("ship_body") instance=ExtResource("8_mpocr")]
 ship_body = NodePath("..")

@@ -12,9 +12,9 @@ var num_containers: int = 0
 
 func _process(_delta):
 	var heading_deg = rad_to_deg(heading)
-	var speed = ship_body.velocity.length() * KNOTS_CONVERSION_RATIO
-	
-	label.set_text("Speed: %.2f kts\nHeading: %.2f°N\nContainers Left: %d" % [speed, heading_deg, num_containers])
+	var speed = ship_body.velocity * KNOTS_CONVERSION_RATIO
+	speed.y = 0
+	label.set_text("Speed: %.2f kts\nRudder angle: %.2f°\nContainers Left: %d" % [speed.length(), heading_deg, num_containers])
 
 func update_heading(new_heading: float):
 	heading = new_heading
