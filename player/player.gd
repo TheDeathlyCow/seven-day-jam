@@ -31,6 +31,8 @@ var ship_speed: int = 0
 
 var wave_time: float = 0
 
+var ended: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -43,6 +45,9 @@ func _exit_tree():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _physics_process(delta):
+	
+	if ended:
+		return
 	
 	var controlled_body = get_controlled_body()
 	
@@ -179,3 +184,9 @@ func process_wave_height(delta):
 	else:
 		ship.velocity.y -= gravity * delta
 		print('push down')
+
+func area_entered(area):
+	if area is Area3D:
+		if (area as Area3D).get_groups().has('end'):
+			ended = true
+	

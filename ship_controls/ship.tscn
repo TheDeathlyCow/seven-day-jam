@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://c34kxvuj4tqf4"]
+[gd_scene load_steps=23 format=3 uid="uid://c34kxvuj4tqf4"]
 
 [ext_resource type="PackedScene" uid="uid://b1iyuldc3wgn" path="res://player/player.tscn" id="1_6v0eb"]
+[ext_resource type="Script" path="res://ship_controls/ship_base.gd" id="1_j7sjp"]
 [ext_resource type="Script" path="res://ship_controls/ship_control.gd" id="1_lbqn1"]
 [ext_resource type="PackedScene" uid="uid://dg52uh2jvemlm" path="res://ship_level/level.tscn" id="2_vfkjq"]
 [ext_resource type="PackedScene" uid="uid://bwq280xjn67uj" path="res://ocean/water_plane.tscn" id="4_x37wq"]
@@ -43,6 +44,7 @@ size = Vector3(1, 1, 27.6519)
 
 [node name="Ship" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102666, 0)
+script = ExtResource("1_j7sjp")
 
 [node name="Player" parent="." node_paths=PackedStringArray("ship", "water_mesh", "steering_wheel") instance=ExtResource("1_6v0eb")]
 transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 0, -0.533644, -0.439735)
@@ -165,9 +167,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.22044, -3.9644, 3.98466)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShipController/Anchors/Starboard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.326)
 shape = SubResource("BoxShape3D_i0irc")
-
-[node name="Area3D" type="Area3D" parent="ShipController"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.29165, 14.9997)
 
 [node name="Containers" type="Node3D" parent="."]
 script = ExtResource("8_hm3ei")
@@ -388,6 +387,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88799, -3.89343, 27.7238)
 [node name="Container72" parent="Containers" instance=ExtResource("5_b0ada")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80047, -3.89343, 27.7238)
 
+[connection signal="area_entered" from="." to="Player" method="area_entered"]
 [connection signal="toggle_ship_speed" from="Player" to="ShipController/Ship/SpeedControl" method="cycle_state"]
 [connection signal="update_heading" from="Player" to="ShipController/HUD" method="update_heading"]
 [connection signal="update_ship_velocity" from="Player" to="Containers" method="on_velocity_update"]

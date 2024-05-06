@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbp28d5bhggei"]
+[gd_scene load_steps=10 format=3 uid="uid://cbp28d5bhggei"]
 
 [ext_resource type="PackedScene" uid="uid://c34kxvuj4tqf4" path="res://ship_controls/ship.tscn" id="1_1wbn6"]
 
@@ -24,6 +24,11 @@ fog_enabled = true
 albedo_color = Color(0.848378, 0.8435, 1.15514e-06, 1)
 emission_enabled = true
 emission = Color(0.93408, 0.93408, 0.93408, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_1tqdr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u2myt"]
+radius = 70.196
 
 [node name="Node3D" type="Node3D"]
 
@@ -89,3 +94,26 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
 transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 406.986, 13.33, 1251.66)
 mesh = SubResource("CylinderMesh_4ucup")
 surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="End" type="Node3D" parent="Guides"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 529.247, 51.3174, 1400)
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Guides/End"]
+transform = Transform3D(11.705, 0, 0, 0, 11.705, 0, 0, 0, 11.705, 0, 0, 0)
+mesh = SubResource("CylinderMesh_4ucup")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Guides/End"]
+transform = Transform3D(11.705, 0, 0, 0, -11.705, -9.53674e-07, 0, 9.53674e-07, -11.705, 0, -15.0004, 0)
+mesh = SubResource("PrismMesh_1tqdr")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_gc5f8")
+
+[node name="Area3D" type="Area3D" parent="Guides/End" groups=["end"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Guides/End/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.9762, 0)
+shape = SubResource("SphereShape3D_u2myt")
+
+[connection signal="area_entered" from="Ship" to="Ship/Player" method="area_entered"]
